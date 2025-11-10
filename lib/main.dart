@@ -1,9 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:complaints_app/core/helper_functions/on_generate_routes.dart';
 import 'package:complaints_app/core/services/custom_bloc_observer.dart';
 import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/core/services/shared_preference_singletone.dart';
+import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
+import 'package:complaints_app/feature/auth/views/cubits/verify_cubit/verify_cubit.dart';
 import 'package:complaints_app/feature/auth/views/signup_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
@@ -27,10 +31,19 @@ class ComplaintApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'cairo'),
-      home: SignupView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => VerifyCubit(getIt.get<AuthRepo>())),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'cairo',
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        onGenerateRoute: onGenerateRoutes,
+        initialRoute: SignupView.routeName,
+      ),
     );
   }
 }
