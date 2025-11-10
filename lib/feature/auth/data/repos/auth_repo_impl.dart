@@ -10,9 +10,21 @@ class AuthRepoImpl implements AuthRepo {
   final Api _api;
   AuthRepoImpl(this._api);
   @override
-  Future<Either<Failure, UserEntity>> login(String email, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<Either<Failure, UserEntity>> login(
+    String email,
+    String password,
+  ) async {
+    try {
+      var data = await _api.post(
+        token: null,
+        url: '$baseUrl/auth/login',
+        body: {'email': email, 'password': password, 'fcmToken': 'nbjkj'},
+      );
+      UserEntity userEntity = UserModel.fromJson(data['user']).toEntity();
+      return Right(userEntity);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
   }
 
   @override

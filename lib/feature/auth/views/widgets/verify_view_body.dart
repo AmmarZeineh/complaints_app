@@ -3,6 +3,7 @@ import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/utils/app_font_styles.dart';
 import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
 import 'package:complaints_app/feature/auth/views/cubits/verify_cubit/verify_cubit.dart';
+import 'package:complaints_app/feature/auth/views/login_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,7 +77,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
 
         if (state is EmailVerificationSuccess) {
           showSuccessMessage(tr('auth.Verification_success'), context);
-          // Navigator.pushReplacement(context, LoginView());
+          Navigator.pushReplacementNamed(context, LoginView.routeName);
         } else if (state is EmailVerificationError) {
           showErrorMessage(state.message, context);
         } else if (state is ResendVerificationSuccess) {

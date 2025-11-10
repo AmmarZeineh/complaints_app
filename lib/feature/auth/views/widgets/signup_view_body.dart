@@ -3,6 +3,7 @@ import 'package:complaints_app/core/utils/app_font_styles.dart';
 import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
 import 'package:complaints_app/core/widgets/custom_text_form_field.dart';
 import 'package:complaints_app/feature/auth/views/cubits/signup_cubit/signup_cubit_cubit.dart';
+import 'package:complaints_app/feature/auth/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,7 +80,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                   SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, LoginView.routeName);
                     },
                     child: Text(
                       'لديك حساب بالفعل؟',
@@ -93,13 +94,13 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     width: double.infinity,
                     child: CustomElevatedButton(
                       title: 'تسجيل',
-                      onPressed: () {
+                      onPressed: () async {
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
                         }
                         autovalidateMode = AutovalidateMode.onUserInteraction;
                         setState(() {});
-                        context.read<SignupCubitCubit>().signup(
+                        await context.read<SignupCubitCubit>().signup(
                           email: email!,
                           password: password!,
                           name: name!,
