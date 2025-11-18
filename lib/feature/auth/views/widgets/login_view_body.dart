@@ -3,7 +3,6 @@ import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
 import 'package:complaints_app/core/widgets/custom_text_form_field.dart';
 import 'package:complaints_app/feature/auth/views/cubits/login_cubit/login_cubit.dart';
 import 'package:complaints_app/feature/auth/views/signup_view.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,13 +31,13 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               const SizedBox(height: 32),
 
               Text(
-                "auth.hi_welcome_back".tr(),
+                'مرحبا مرة اخرى',
                 style: AppTextStyles.w700_20,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
-                "auth.hope_your_fine".tr(),
+                'نتمنى انك بخير',
                 style: AppTextStyles.w400_14,
                 textAlign: TextAlign.center,
               ),
@@ -46,7 +45,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               CustomFormTextField(
                 textInputType: TextInputType.emailAddress,
                 prefixIcon: Icon(Icons.email),
-                title: "auth.email".tr(),
+                title: 'البريد الالكتروني',
                 onSaved: (p0) => email = p0,
               ),
               SizedBox(height: 20),
@@ -54,12 +53,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 textInputType: TextInputType.text,
                 obscureText: true,
                 prefixIcon: Icon(Icons.password),
-                title: "auth.password".tr(),
+                title: 'كلمة المرور',
                 onSaved: (p0) => password = p0,
               ),
               SizedBox(height: 23),
               CustomElevatedButton(
-                title: "auth.login".tr(),
+                title: 'تسجيل الدخول',
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
@@ -76,11 +75,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               Center(
                 child: RichText(
                   text: TextSpan(
-                    text: "auth.dont_have_an_account".tr(),
+                    text: 'ليس لديك حساب؟ ',
                     style: const TextStyle(color: Colors.grey, fontSize: 16),
                     children: [
                       TextSpan(
-                        text: "auth.signup".tr(),
+                        text: 'تسجيل',
                         style: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
@@ -100,7 +99,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   // Navigator.pushNamed(context, ForgotPasswordView.routeName);
                 },
                 child: Text(
-                  "auth.forgot_password".tr(),
+                  'هل نسيت كلمة المرور؟',
                   style: const TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,

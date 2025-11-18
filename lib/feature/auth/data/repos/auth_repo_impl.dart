@@ -32,11 +32,18 @@ class AuthRepoImpl implements AuthRepo {
     String email,
     String password,
     String name,
+    String nationalId,
   ) async {
     try {
       var data = await _api.post(
         url: '$baseUrl/user',
-        body: {'email': email, 'password': password, 'name': name, 'roleId': 3},
+        body: {
+          'email': email,
+          'password': password,
+          'name': name,
+          'roleId': 3,
+          'nationalID': nationalId.toString(),
+        },
       );
       UserModel userModel = UserModel.fromJson(data);
       return Right(userModel.toEntity());

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/utils/app_colors.dart';
 import 'package:complaints_app/core/utils/app_font_styles.dart';
 import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
@@ -18,7 +21,7 @@ class SignupViewBody extends StatefulWidget {
 class _SignupViewBodyState extends State<SignupViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? name, email, password;
+  String? name, email, password, nationalId;
   bool isObscure = true;
 
   @override
@@ -61,6 +64,14 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                   SizedBox(height: 30),
                   CustomFormTextField(
                     onSaved: (p0) {
+                      nationalId = p0;
+                    },
+                    title: 'الرقم الوطني',
+                    textInputType: .number,
+                  ),
+                  SizedBox(height: 30),
+                  CustomFormTextField(
+                    onSaved: (p0) {
                       password = p0;
                     },
                     prefixIcon: GestureDetector(
@@ -87,6 +98,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       style: AppTextStyles.w400_16.copyWith(
                         color: Colors.blueAccent,
                       ),
+                      textAlign: .center,
                     ),
                   ),
                   SizedBox(height: 30),
@@ -95,15 +107,24 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     child: CustomElevatedButton(
                       title: 'تسجيل',
                       onPressed: () async {
+                        if (nationalId == null || nationalId!.length < 13) {
+                          showErrorMessage(
+                            'يجب ان يكون الرقم الوطني من 13 رقم',
+                            context,
+                          );
+                        }
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
                         }
+                        log(nationalId.toString());
+
                         autovalidateMode = AutovalidateMode.onUserInteraction;
                         setState(() {});
                         await context.read<SignupCubitCubit>().signup(
                           email: email!,
                           password: password!,
                           name: name!,
+                          nationalId: nationalId!,
                         );
                       },
                       padding: EdgeInsetsGeometry.symmetric(vertical: 12),

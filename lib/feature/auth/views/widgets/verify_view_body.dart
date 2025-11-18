@@ -76,12 +76,12 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
         }
 
         if (state is EmailVerificationSuccess) {
-          showSuccessMessage(tr('auth.Verification_success'), context);
+          showSuccessMessage('تم تفعيل الحساب', context);
           Navigator.pushReplacementNamed(context, LoginView.routeName);
         } else if (state is EmailVerificationError) {
           showErrorMessage(state.message, context);
         } else if (state is ResendVerificationSuccess) {
-          showSuccessMessage(tr('auth.Code_resent'), context);
+          showSuccessMessage('تم ارسال الكود مجددا', context);
           _startResendTimer();
         }
       },
@@ -93,7 +93,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  tr('auth.Verify_code'),
+                  tr('تأكيد الحساب'),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.w600_20,
                 ),
@@ -121,10 +121,10 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                           verificationCode: code!,
                         );
                       } else {
-                        showErrorMessage(tr('auth.Enter_valid_code'), context);
+                        showErrorMessage('ادخل رمز صالح', context);
                       }
                     },
-                    title: 'auth.Verify'.tr(),
+                    title: 'تأكيد',
                   ),
                 ),
 
@@ -136,7 +136,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                       );
                     },
                     child: Text(
-                      tr('auth.Resend_code'),
+                      tr('اعادة ارسال الرمز'),
                       style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w600,
@@ -149,7 +149,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                     child: Column(
                       children: [
                         Text(
-                          tr('auth.Resend_available_in'),
+                          'اعادة ارسال الرمز متوفرة في',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 14,
@@ -167,7 +167,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                         TextButton(
                           onPressed: null,
                           child: Text(
-                            tr('auth.Resend_code'),
+                            'اعادة ارسال الرمز',
                             style: TextStyle(
                               color: Colors.grey[400],
                               fontWeight: FontWeight.w600,

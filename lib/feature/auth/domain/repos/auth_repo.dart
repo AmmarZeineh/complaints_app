@@ -9,6 +9,7 @@ abstract class AuthRepo {
     String email,
     String password,
     String name,
+    String nationalId,
   );
 
   Future<Either<Failure, void>> verifyEmail({
