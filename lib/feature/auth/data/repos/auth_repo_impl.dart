@@ -1,16 +1,22 @@
+import 'dart:developer';
+
 import 'package:complaints_app/constants.dart';
+import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
 import 'package:complaints_app/core/errors/failure.dart';
 import 'package:complaints_app/core/services/api.dart';
 import 'package:complaints_app/feature/auth/data/models/user_model.dart';
 import 'package:complaints_app/feature/auth/domain/entities/user_entity.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final Api _api;
   AuthRepoImpl(this._api);
   @override
   Future<Either<Failure, UserEntity>> login(
+    BuildContext context,
     String email,
     String password,
   ) async {
@@ -20,6 +26,9 @@ class AuthRepoImpl implements AuthRepo {
         url: '$baseUrl/auth/login',
         body: {'email': email, 'password': password, 'fcmToken': 'nbjkj'},
       );
+      context.read<UserCubit>().setToken(data["accessToken"]);
+      
+    
       UserEntity userEntity = UserModel.fromJson(data['user']).toEntity();
       return Right(userEntity);
     } catch (e) {
@@ -36,7 +45,13 @@ class AuthRepoImpl implements AuthRepo {
     try {
       var data = await _api.post(
         url: '$baseUrl/user',
-        body: {'email': email, 'password': password, 'name': name, 'roleId': 3},
+        body: {
+          'email': email,
+          'password': password,
+          'name': name,
+          'roleId': 3,
+          "nationalID": "string",
+        },
       );
       UserModel userModel = UserModel.fromJson(data);
       return Right(userModel.toEntity());
