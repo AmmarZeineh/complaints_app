@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
 import 'package:complaints_app/core/helper_functions/on_generate_routes.dart';
 import 'package:complaints_app/core/services/custom_bloc_observer.dart';
 import 'package:complaints_app/core/services/get_it_service.dart';
@@ -33,6 +34,7 @@ class ComplaintApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create: (context) => VerifyCubit(getIt.get<AuthRepo>())),
       ],
       child: MaterialApp(

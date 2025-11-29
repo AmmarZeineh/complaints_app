@@ -64,10 +64,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     formKey.currentState!.save();
                     if (context.mounted) {
                       await context.read<LoginCubit>().login(
+                        context: context,
                         email: email!,
                         password: password!,
                       );
                     }
+                    autovalidateMode = AutovalidateMode.always;
                   }
                 },
               ),

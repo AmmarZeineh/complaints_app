@@ -48,7 +48,7 @@ class CustomFormTextField extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTextStyles.w400_14.copyWith(color: Colors.grey),
+                    style: AppTextStyles.w400_14.copyWith(color: Colors.black),
                   ),
                   SizedBox(height: 40),
                 ],
