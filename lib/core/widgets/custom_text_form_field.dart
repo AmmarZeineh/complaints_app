@@ -10,6 +10,7 @@ class CustomFormTextField extends StatelessWidget {
     this.onSaved,
     this.obscureText = false,
     this.maxLines = 1,
+    this.validator,
   });
   final String title;
   final TextInputType textInputType;
@@ -17,25 +18,26 @@ class CustomFormTextField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final bool obscureText;
   final int maxLines;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: maxLines,
-      textDirection: TextDirection.rtl,
       style: const TextStyle(color: Colors.black),
       obscureText: obscureText,
       onSaved: onSaved,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'هذا الحقل مطلوب';
-        }
-        return null;
-      },
+      validator:
+          validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return 'هذا الحقل مطلوب';
+            }
+            return null;
+          },
       keyboardType: textInputType,
 
       decoration: InputDecoration(
-        hintTextDirection: TextDirection.rtl,
         prefixIcon: prefixIcon,
         border: buildBorder(),
         focusedBorder: buildBorder(),
@@ -44,7 +46,7 @@ class CustomFormTextField extends StatelessWidget {
           children: [
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,

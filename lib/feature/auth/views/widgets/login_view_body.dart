@@ -78,7 +78,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 child: RichText(
                   text: TextSpan(
                     text: 'ليس لديك حساب؟ ',
-                    style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    style: AppTextStyles.w400_14,
                     children: [
                       TextSpan(
                         text: 'تسجيل',
