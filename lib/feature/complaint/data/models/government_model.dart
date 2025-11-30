@@ -12,6 +12,12 @@ class GovernmentModel extends GovernmentEntity {
       name: json["name"],
     );
   }
+  factory GovernmentModel.toJson(GovernmentModel government) {
+    return GovernmentModel(
+      id: government.id,
+      name: government.name,
+    );
+  }
 
   static List<GovernmentModel> fromJsonList(List<dynamic> list) {
     return list.map((e) => GovernmentModel.fromJson(e)).toList();

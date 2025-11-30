@@ -26,7 +26,7 @@ class GovernmentDropdownState extends State<GovernmentDropdown> {
     return BlocBuilder<GetGovernmentCubit, GetGovernmentState>(
       builder: (context, state) {
         if (state is GetGovernmentLoading) {
-          return const CircularProgressIndicator();
+          return Center(child: const CircularProgressIndicator());
         }
 
         if (state is GetGovernmentFailure) {
@@ -49,7 +49,6 @@ class GovernmentDropdownState extends State<GovernmentDropdown> {
             onChanged: (value) {
               setState(() => selected = value);
               widget.onSelect(value!.id);
-
             },
           );
         }

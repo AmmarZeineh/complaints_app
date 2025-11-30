@@ -24,7 +24,7 @@ void main() async {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('ar')],
+        supportedLocales: [Locale('ar')],
         path: 'assets/langs', // <-- change the path of the translation files
         fallbackLocale: Locale('ar'),
         child: ComplaintApp(),

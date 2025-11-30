@@ -3,7 +3,7 @@ import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:complaints_app/feature/auth/views/cubits/login_cubit/login_cubit.dart';
 import 'package:complaints_app/feature/auth/views/widgets/login_view_body.dart';
-import 'package:complaints_app/feature/complaint/presentation/views/create_complaint_view.dart';
+import 'package:complaints_app/feature/complaint_view/presentation/views/complaints_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -37,7 +37,7 @@ class LoginViewConsumer extends StatelessWidget {
           showErrorMessage(state.errMessage, context);
         } else if (state is LoginSuccess) {
           showSuccessMessage('Success', context);
-          Navigator.pushNamed(context, CreateComplaintView.routeName);
+          Navigator.pushNamed(context, ComplaintsView.routeName);
         }
       },
       builder: (context, state) {

@@ -16,7 +16,6 @@ class CreateComplaintView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text(
           "تقديم شكوى جديدة",
           style: AppTextStyles.w800_16.copyWith(color: Colors.white),
