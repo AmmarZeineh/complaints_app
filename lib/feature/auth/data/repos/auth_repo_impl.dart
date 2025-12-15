@@ -38,14 +38,14 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signup(
+  Future<Either<Failure, String>> signup(
     String email,
     String password,
     String name,
     String nationalId,
   ) async {
     try {
-      var data = await _api.post(
+      await _api.post(
         url: '$baseUrl/user',
         body: {
           'email': email,
@@ -55,8 +55,7 @@ class AuthRepoImpl implements AuthRepo {
           'nationalID': nationalId.toString(),
         },
       );
-      UserModel userModel = UserModel.fromJson(data);
-      return Right(userModel.toEntity());
+      return Right(email);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

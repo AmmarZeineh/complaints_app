@@ -1,3 +1,6 @@
+import 'package:complaints_app/feature/complaint_view/domain/entities/complaint_entity.dart';
+import 'package:complaints_app/feature/complaint_view/presentation/views/complaint_details_view.dart';
+import 'package:complaints_app/feature/complaint_view/presentation/views/complaints_view.dart';
 import 'package:complaints_app/feature/auth/presentation/views/login_view.dart';
 import 'package:complaints_app/feature/auth/presentation/views/signup_view.dart';
 import 'package:complaints_app/feature/auth/presentation/views/verify_view.dart';
@@ -20,6 +23,15 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       );
     case CreateComplaintView.routeName:
       return MaterialPageRoute(builder: (_) => const CreateComplaintView());
+    case ComplaintsView.routeName:
+      return MaterialPageRoute(builder: (_) => const ComplaintsView());
+    case ComplaintDetailsView.routeName:
+      return MaterialPageRoute(
+        builder: (_) {
+          final complaint = settings.arguments as ComplaintEntity;
+          return ComplaintDetailsView(complaint: complaint);
+        },
+      );
     case NotificationView.routeName:
       return MaterialPageRoute(builder: (_) => const NotificationView());
     default:

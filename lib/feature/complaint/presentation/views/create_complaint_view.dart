@@ -6,7 +6,6 @@ import 'package:complaints_app/feature/complaint/presentation/cubits/create_comp
 import 'package:complaints_app/feature/complaint/presentation/cubits/get_government_cubit/get_government_cubit.dart';
 import 'package:complaints_app/feature/complaint/presentation/views/widgets/create_complaint_view_body.dart';
 import 'package:complaints_app/feature/notification/presentation/cubits/fetch_notification_cubit/fetch_notification_cubit.dart';
-import 'package:complaints_app/feature/notification/presentation/views/notification_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,51 +29,9 @@ class _CreateComplaintViewState extends State<CreateComplaintView> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            BlocBuilder<FetchNotificationCubit, FetchNotificationState>(
-              builder: (context, state) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Stack(
-                    children: [
-                      // عرض النقطة الحمراء فقط عند وجود notifications غير مقروءة
-                      if (state is FetchNotificationSuccess &&
-                          state.hasUnreadNotifications)
-                        Positioned(
-                          right: 32,
-                          top: 8,
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.025,
-                            width: MediaQuery.of(context).size.width * 0.025,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            NotificationView.routeName,
-                          );
-                        },
-                        icon: const Icon(Icons.notifications, size: 28),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            Text(
-              "تقديم شكوى جديدة",
-              style: AppTextStyles.w800_16.copyWith(color: Colors.white),
-            ),
-          ],
+        title: Text(
+          "تقديم شكوى جديدة",
+          style: AppTextStyles.w800_16.copyWith(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: AppColors.primaryColor,

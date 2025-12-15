@@ -27,7 +27,7 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
 
       List<GovernmentEntity> governments = GovernmentModel.fromJsonList(
         dataList,
-      );
+      ).map((e) => e.toEntity()).toList();
 
       return Right(governments);
     } catch (e) {

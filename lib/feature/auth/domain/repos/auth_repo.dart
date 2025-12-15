@@ -11,7 +11,7 @@ abstract class AuthRepo {
     String fcmToken,
   );
 
-  Future<Either<Failure, UserEntity>> signup(
+  Future<Either<Failure, String>> signup(
     String email,
     String password,
     String name,
