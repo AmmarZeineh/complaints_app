@@ -26,7 +26,8 @@ class ComplaintsView extends StatelessWidget {
       body: SafeArea(
         child: BlocProvider(
           create: (context) =>
-              GetComplaintsCubit(getIt.get<GetComplaintsRepo>())..getComplaints(skip: 0, limit: 10, context: context),
+              GetComplaintsCubit(getIt.get<GetComplaintsRepo>())
+                ..getComplaints(skip: 0, limit: 10, context: context),
           child: ComplaintsViewBody(),
         ),
       ),

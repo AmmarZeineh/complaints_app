@@ -13,6 +13,7 @@ class UserCubit extends Cubit<UserState> {
     token = data;
     log(token);
   }
+
   String getToken() {
     return token;
   }

@@ -13,6 +13,4 @@ final class SignupCubitFailure extends SignupCubitState {
   SignupCubitFailure(this.errMessage);
 }
 
-final class SignupCubitSuccess extends SignupCubitState {
-  
-}
+final class SignupCubitSuccess extends SignupCubitState {}

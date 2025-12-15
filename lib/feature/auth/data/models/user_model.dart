@@ -10,8 +10,12 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(id: json['id'], name: json['name'], email: json['email']);
   }
-  factory UserModel.toJson(Map<String, dynamic> json) {
-    return UserModel(id: json['id'], name: json['name'], email: json['email']);
+  factory UserModel.toJson(UserModel userModel) {
+    return UserModel(
+      id: userModel.id,
+      name: userModel.name,
+      email: userModel.email,
+    );
   }
   UserEntity toEntity() => UserEntity(id: id, name: name, email: email);
 }

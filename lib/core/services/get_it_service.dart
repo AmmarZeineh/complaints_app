@@ -16,5 +16,7 @@ void setupLocator() {
   getIt.registerSingleton<CreateComplaintRepo>(
     CreateComplaintRepoImpl(getIt.get<Api>()),
   );
-  getIt.registerSingleton<GetComplaintsRepo>(GetComplaintRepoImpl(getIt.get<Api>()));
+  getIt.registerSingleton<GetComplaintsRepo>(
+    GetComplaintRepoImpl(getIt.get<Api>()),
+  );
 }

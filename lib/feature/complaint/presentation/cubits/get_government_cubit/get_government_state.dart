@@ -11,6 +11,7 @@ final class GetGovernmentSuccess extends GetGovernmentState {
   final List<GovernmentEntity> governments;
   GetGovernmentSuccess(this.governments);
 }
+
 final class GetGovernmentFailure extends GetGovernmentState {
   final String errorMessage;
   GetGovernmentFailure(this.errorMessage);

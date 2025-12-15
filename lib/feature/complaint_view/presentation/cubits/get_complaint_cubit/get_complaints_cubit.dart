@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:complaints_app/feature/complaint_view/domain/entities/complaint_entity.dart';
 import 'package:complaints_app/feature/complaint_view/domain/repos/get_complaints_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 part 'get_complaints_state.dart';
 

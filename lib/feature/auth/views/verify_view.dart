@@ -10,9 +10,7 @@ class VerifyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
-      body: SafeArea(
-        child: VerifyViewBody(email: email),
-      ),
+      body: SafeArea(child: VerifyViewBody(email: email)),
     );
   }
 }

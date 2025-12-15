@@ -27,14 +27,13 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
 
       List<GovernmentEntity> governments = GovernmentModel.fromJsonList(
         dataList,
-      );
+      ).map((e) => e.toEntity()).toList();
 
       return Right(governments);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
-
 
   @override
   Future<Either<Failure, void>> createComplaint({
@@ -48,7 +47,6 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
   }) async {
     try {
       log('Images: ${imageFiles.length}, Documents: ${attachmentFiles.length}');
-
 
       List<MultipartFile> images = [];
       for (var img in imageFiles) {
