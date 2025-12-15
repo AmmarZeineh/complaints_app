@@ -4,7 +4,12 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 abstract class AuthRepo {
-  Future<Either<Failure, UserEntity>> login(BuildContext context,String email, String password,);
+  Future<Either<Failure, UserEntity>> login(
+    BuildContext context,
+    String email,
+    String password,
+    String fcmToken,
+  );
 
   Future<Either<Failure, UserEntity>> signup(
     String email,

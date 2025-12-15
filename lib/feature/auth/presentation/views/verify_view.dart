@@ -1,4 +1,4 @@
-import 'package:complaints_app/feature/auth/views/widgets/verify_view_body.dart';
+import 'package:complaints_app/feature/auth/presentation/views/widgets/verify_view_body.dart';
 import 'package:flutter/material.dart';
 
 class VerifyView extends StatelessWidget {
@@ -10,9 +10,7 @@ class VerifyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
-      body: SafeArea(
-        child: VerifyViewBody(email: email),
-      ),
+      body: SafeArea(child: VerifyViewBody(email: email)),
     );
   }
 }

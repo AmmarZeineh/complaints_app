@@ -1,9 +1,9 @@
 import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
-import 'package:complaints_app/feature/auth/views/cubits/signup_cubit/signup_cubit_cubit.dart';
-import 'package:complaints_app/feature/auth/views/verify_view.dart';
-import 'package:complaints_app/feature/auth/views/widgets/signup_view_body.dart';
+import 'package:complaints_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit_cubit.dart';
+import 'package:complaints_app/feature/auth/presentation/views/verify_view.dart';
+import 'package:complaints_app/feature/auth/presentation/views/widgets/signup_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';

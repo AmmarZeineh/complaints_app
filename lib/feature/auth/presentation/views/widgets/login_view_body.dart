@@ -1,8 +1,9 @@
+import 'package:complaints_app/core/services/notification_service.dart';
 import 'package:complaints_app/core/utils/app_font_styles.dart';
 import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
 import 'package:complaints_app/core/widgets/custom_text_form_field.dart';
-import 'package:complaints_app/feature/auth/views/cubits/login_cubit/login_cubit.dart';
-import 'package:complaints_app/feature/auth/views/signup_view.dart';
+import 'package:complaints_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:complaints_app/feature/auth/presentation/views/signup_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,11 +63,13 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+                    var token = await NotificationService.getFcmToken();
                     if (context.mounted) {
                       await context.read<LoginCubit>().login(
                         context: context,
                         email: email!,
                         password: password!,
+                        fcmToken: token!,
                       );
                     }
                     autovalidateMode = AutovalidateMode.always;

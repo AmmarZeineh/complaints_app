@@ -9,7 +9,7 @@ class GetGovernmentCubit extends Cubit<GetGovernmentState> {
   GetGovernmentCubit(this.complaintRepo) : super(GetGovernmentInitial());
   final CreateComplaintRepo complaintRepo;
 
- Future<void> getGovernment() async {
+  Future<void> getGovernment() async {
     emit(GetGovernmentLoading());
     final result = await complaintRepo.getGovernment();
     result.fold(

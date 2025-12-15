@@ -35,7 +35,6 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
     }
   }
 
-
   @override
   Future<Either<Failure, void>> createComplaint({
     required BuildContext context,
@@ -48,7 +47,6 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
   }) async {
     try {
       log('Images: ${imageFiles.length}, Documents: ${attachmentFiles.length}');
-
 
       List<MultipartFile> images = [];
       for (var img in imageFiles) {
@@ -72,7 +70,7 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
           'documents': documents,
           'Location': location,
         },
-        token: context.read<UserCubit>().token,
+        token: context.read<UserCubit>().currentUser!.accessToken,
       );
 
       return Right(null);

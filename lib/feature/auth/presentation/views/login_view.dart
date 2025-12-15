@@ -1,8 +1,8 @@
 import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
-import 'package:complaints_app/feature/auth/views/cubits/login_cubit/login_cubit.dart';
-import 'package:complaints_app/feature/auth/views/widgets/login_view_body.dart';
+import 'package:complaints_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:complaints_app/feature/auth/presentation/views/widgets/login_view_body.dart';
 import 'package:complaints_app/feature/complaint/presentation/views/create_complaint_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

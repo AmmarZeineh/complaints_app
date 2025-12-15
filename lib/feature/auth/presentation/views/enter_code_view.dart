@@ -1,23 +1,36 @@
 import 'dart:async';
+
 import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/utils/app_font_styles.dart';
 import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
-import 'package:complaints_app/feature/auth/views/cubits/verify_cubit/verify_cubit.dart';
-import 'package:complaints_app/feature/auth/views/login_view.dart';
+import 'package:complaints_app/feature/auth/presentation/cubits/verify_cubit/verify_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 
-class VerifyViewBody extends StatefulWidget {
-  const VerifyViewBody({super.key, required this.email});
+class EnterCodeView extends StatelessWidget {
+  const EnterCodeView({super.key, required this.email});
+  static const String routeName = 'enter-code-view';
   final String email;
 
   @override
-  State<VerifyViewBody> createState() => _VerifyViewBodyState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(child: EnterCodeVeiwBody(email: email)),
+    );
+  }
 }
 
-class _VerifyViewBodyState extends State<VerifyViewBody> {
+class EnterCodeVeiwBody extends StatefulWidget {
+  const EnterCodeVeiwBody({super.key, required this.email});
+  final String email;
+
+  @override
+  State<EnterCodeVeiwBody> createState() => _EnterCodeVeiwBodyState();
+}
+
+class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
   String? code;
   Timer? _timer;
   int _resendCountdown = 0;
@@ -76,12 +89,16 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
         }
 
         if (state is EmailVerificationSuccess) {
-          showSuccessMessage('تم تفعيل الحساب', context);
-          Navigator.pushReplacementNamed(context, LoginView.routeName);
+          showSuccessMessage(tr('auth.Verification_success'), context);
+          // Navigator.pushNamed(
+          //   context,
+          //   NewPasswordView.routeName,
+          //   arguments: widget.email,
+          // );
         } else if (state is EmailVerificationError) {
           showErrorMessage(state.message, context);
         } else if (state is ResendVerificationSuccess) {
-          showSuccessMessage('تم ارسال الكود مجددا', context);
+          showSuccessMessage(tr('auth.code_sent'), context);
           _startResendTimer();
         }
       },
@@ -93,7 +110,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  tr('تأكيد الحساب'),
+                  tr('auth.Verify_code'),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.w600_20,
                 ),
@@ -114,17 +131,17 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                     vertical: 15,
                   ),
                   child: CustomElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (code != null && code!.length == 6) {
-                        context.read<VerifyCubit>().verifyEmail(
+                        await context.read<VerifyCubit>().verifyEmail(
                           email: widget.email,
                           verificationCode: code!,
                         );
                       } else {
-                        showErrorMessage('ادخل رمز صالح', context);
+                        showErrorMessage(tr('auth.Enter_valid_code'), context);
                       }
                     },
-                    title: 'تأكيد',
+                    title: 'auth.Verify'.tr(),
                   ),
                 ),
 
@@ -136,7 +153,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                       );
                     },
                     child: Text(
-                      tr('اعادة ارسال الرمز'),
+                      tr('auth.Resend_code'),
                       style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w600,
@@ -149,7 +166,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                     child: Column(
                       children: [
                         Text(
-                          'اعادة ارسال الرمز متوفرة في',
+                          tr('auth.Resend_available_in'),
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 14,
@@ -167,7 +184,7 @@ class _VerifyViewBodyState extends State<VerifyViewBody> {
                         TextButton(
                           onPressed: null,
                           child: Text(
-                            'اعادة ارسال الرمز',
+                            tr('auth.Resend_code'),
                             style: TextStyle(
                               color: Colors.grey[400],
                               fontWeight: FontWeight.w600,

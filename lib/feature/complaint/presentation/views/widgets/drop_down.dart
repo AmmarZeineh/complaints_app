@@ -49,7 +49,6 @@ class GovernmentDropdownState extends State<GovernmentDropdown> {
             onChanged: (value) {
               setState(() => selected = value);
               widget.onSelect(value!.id);
-
             },
           );
         }

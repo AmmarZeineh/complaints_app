@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:complaints_app/constants.dart';
 import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
@@ -18,16 +19,18 @@ class AuthRepoImpl implements AuthRepo {
     BuildContext context,
     String email,
     String password,
+    String fcmToken,
   ) async {
     try {
       var data = await _api.post(
         token: null,
         url: '$baseUrl/auth/login',
-        body: {'email': email, 'password': password, 'fcmToken': 'nbjkj'},
+        body: {'email': email, 'password': password, 'fcmToken': fcmToken},
       );
-      context.read<UserCubit>().setToken(data["accessToken"]);
+      log(fcmToken.toString());
+      UserEntity userEntity = UserModel.fromJson(data).toEntity();
+      context.read<UserCubit>().setUser(userEntity);
 
-      UserEntity userEntity = UserModel.fromJson(data['user']).toEntity();
       return Right(userEntity);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
