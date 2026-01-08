@@ -134,6 +134,7 @@ class _CreateComplaintViewBodyState extends State<CreateComplaintViewBody> {
               BlocConsumer<CreateComplaintCubit, CreateComplaintState>(
                 listener: (context, state) {
                   if (state is CreateComplaintSuccess) {
+                    Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('تم إرسال الشكوى بنجاح'),

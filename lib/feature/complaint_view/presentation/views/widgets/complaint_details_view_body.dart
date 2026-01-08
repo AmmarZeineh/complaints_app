@@ -433,7 +433,6 @@ class _ComplaintDetailsViewBodyState extends State<ComplaintDetailsViewBody> {
                         ),
                       ),
                     ),
-                    Icon(Icons.download, color: Colors.green, size: 20),
                   ],
                 ),
               );

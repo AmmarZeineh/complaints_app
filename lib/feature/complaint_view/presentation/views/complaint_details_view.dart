@@ -17,6 +17,10 @@ class ComplaintDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back_ios, color: Colors.white),
+        ),
         title: Text(
           " الشكاوي المقدمة ",
           style: AppTextStyles.w800_16.copyWith(color: Colors.white),
@@ -27,7 +31,8 @@ class ComplaintDetailsView extends StatelessWidget {
 
       body: SafeArea(
         child: BlocProvider(
-          create: (context) => SendInteractionCubit(getIt.get<GetComplaintsRepo>()),
+          create: (context) =>
+              SendInteractionCubit(getIt.get<GetComplaintsRepo>()),
           child: ComplaintDetailsViewBody(complaint: complaint),
         ),
       ),
