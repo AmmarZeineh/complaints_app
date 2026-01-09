@@ -1,15 +1,9 @@
 import 'package:complaints_app/core/errors/failure.dart';
 import 'package:complaints_app/feature/notification/domain/entities/notification_entity.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 
 abstract class NotificationRepo {
-  Future<Either<Failure, List<NotificationEntity>>> getNotifications({
-    required BuildContext context,
-  });
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications();
 
-  Future<Either<Failure, void>> markAsRead({
-    required BuildContext context,
-    required int notificationId,
-  });
+  Future<Either<Failure, void>> markAsRead({required int notificationId});
 }

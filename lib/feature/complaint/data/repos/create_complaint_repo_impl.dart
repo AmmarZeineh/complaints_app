@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:complaints_app/constants.dart';
-import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
 import 'package:complaints_app/core/errors/failure.dart';
 import 'package:complaints_app/core/services/api.dart';
 import 'package:complaints_app/feature/complaint/data/models/government_model.dart';
@@ -9,8 +8,6 @@ import 'package:complaints_app/feature/complaint/domain/entities/government_enti
 import 'package:complaints_app/feature/complaint/domain/repos/create_complaint_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateComplaintRepoImpl implements CreateComplaintRepo {
@@ -37,7 +34,6 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
 
   @override
   Future<Either<Failure, void>> createComplaint({
-    required BuildContext context,
     required String type,
     required String description,
     required num governmentId,
@@ -70,7 +66,6 @@ class CreateComplaintRepoImpl implements CreateComplaintRepo {
           'documents': documents,
           'Location': location,
         },
-        token: context.read<UserCubit>().currentUser!.accessToken,
       );
 
       return Right(null);

@@ -1,3 +1,4 @@
+import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
 import 'package:complaints_app/core/helper_functions/snack_bars.dart';
 import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
@@ -36,7 +37,7 @@ class LoginViewConsumer extends StatelessWidget {
         if (state is LoginFailure) {
           showErrorMessage(state.errMessage, context);
         } else if (state is LoginSuccess) {
-          showSuccessMessage('Success', context);
+          context.read<UserCubit>().setUser(state.userEntity);
           Navigator.pushNamed(context, ComplaintsView.routeName);
         }
       },

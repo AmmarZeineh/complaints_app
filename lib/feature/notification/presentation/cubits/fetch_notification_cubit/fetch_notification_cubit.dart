@@ -19,9 +19,9 @@ class FetchNotificationCubit extends Cubit<FetchNotificationState> {
     return false;
   }
 
-  Future<void> fetchNotifications({required context}) async {
+  Future<void> fetchNotifications() async {
     emit(FetchNotificationLoading());
-    final result = await _notificationRepo.getNotifications(context: context);
+    final result = await _notificationRepo.getNotifications();
     result.fold((failure) => emit(FetchNotificationFailure(failure.message)), (
       notifications,
     ) {

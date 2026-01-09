@@ -17,16 +17,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService.initializeNotification(navKey: navigatorKey);
   FirebaseMessaging.onBackgroundMessage(
-    NotificationService.firebaseMessaginhBackgroundHandler,
+    NotificationService.firebaseMessagingBackgroundHandler,
   );
 
-  await NotificationService.initializeNotification();
   setupLocator();
   await Prefs.init();
   Bloc.observer = CustomBlocObserver();
@@ -60,6 +62,7 @@ class ComplaintApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

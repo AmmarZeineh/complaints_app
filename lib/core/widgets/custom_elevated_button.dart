@@ -8,10 +8,12 @@ class CustomElevatedButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.padding = EdgeInsets.zero,
+    this.backgroundColor = AppColors.primaryColor,
   });
   final String title;
   final void Function() onPressed;
   final EdgeInsetsGeometry padding;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomElevatedButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: backgroundColor,
         ),
         child: Padding(
           padding: padding,

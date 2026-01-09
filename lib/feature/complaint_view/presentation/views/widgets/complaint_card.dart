@@ -1,8 +1,15 @@
+import 'package:complaints_app/core/helper_functions/snack_bars.dart';
+import 'package:complaints_app/core/services/get_it_service.dart';
 import 'package:complaints_app/core/utils/app_font_styles.dart';
+import 'package:complaints_app/core/widgets/custom_elevated_button.dart';
 import 'package:complaints_app/feature/complaint_view/domain/entities/complaint_entity.dart';
+import 'package:complaints_app/feature/complaint_view/domain/repos/get_complaints_repo.dart';
+import 'package:complaints_app/feature/complaint_view/presentation/cubits/delete_complaint_cubit/delete_complaint_cubit.dart';
+import 'package:complaints_app/feature/complaint_view/presentation/cubits/get_complaint_cubit/get_complaints_cubit.dart';
 import 'package:complaints_app/feature/complaint_view/presentation/views/complaint_details_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ComplaintCard extends StatelessWidget {
   const ComplaintCard({super.key, required this.complaintEntity});
@@ -28,9 +35,6 @@ class ComplaintCard extends StatelessWidget {
   }
 
   IconData _getComplaintIcon(String type) {
-    if (type.contains("خدمة")) return Icons.miscellaneous_services;
-    if (type.contains("نظافة")) return Icons.cleaning_services;
-    if (type.contains("مشكلة")) return Icons.warning_amber;
     return Icons.report_problem;
   }
 
@@ -55,7 +59,6 @@ class ComplaintCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // العنوان + الأيقونة
               Row(
                 children: [
                   Icon(
@@ -263,8 +266,83 @@ class ComplaintCard extends StatelessWidget {
                   ],
                 ),
               ],
+              SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                  backgroundColor: Colors.red.shade400,
+                  title: 'حذف الشكوى',
+                  onPressed: () async {
+                    final deleted = await _showDeleteDialog(context);
+
+                    if (deleted == true && context.mounted) {
+                      context.read<GetComplaintsCubit>().getComplaints(
+                        skip: 0,
+                        limit: 10,
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool?> _showDeleteDialog(BuildContext context) async {
+    return showDialog<bool>(
+      // أضف return هون
+      barrierDismissible: false,
+      context: context,
+      builder: (dialogContext) => BlocProvider(
+        create: (context) =>
+            DeleteComplaintCubit(getIt.get<GetComplaintsRepo>()),
+        child: BlocConsumer<DeleteComplaintCubit, DeleteComplaintState>(
+          listener: (context, state) {
+            if (state is DeleteComplaintSuccess) {
+              Navigator.pop(dialogContext, true); // أضف true هون
+              showSuccessMessage('تم حذف الشكوى بنجاح', context);
+            } else if (state is DeleteComplaintFailure) {
+              Navigator.pop(dialogContext, false); // أضف false هون
+              showErrorMessage('فشل حذف الشكوى ${state.errorMessage}', context);
+            }
+          },
+          builder: (context, state) {
+            return AlertDialog(
+              title: Text('تأكيد الحذف'),
+              content: state is DeleteComplaintLoading
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 16),
+                        Text('جاري الحذف...'),
+                      ],
+                    )
+                  : Text('هل أنت متأكد من حذف هذه الشكوى؟'),
+              actions: state is DeleteComplaintLoading
+                  ? []
+                  : [
+                      TextButton(
+                        onPressed: () => Navigator.pop(
+                          dialogContext,
+                          false,
+                        ), // أضف false هون
+                        child: Text('إلغاء'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await context
+                              .read<DeleteComplaintCubit>()
+                              .deleteComplaint(id: complaintEntity.id);
+                        },
+                        child: Text('حذف', style: TextStyle(color: Colors.red)),
+                      ),
+                    ],
+            );
+          },
         ),
       ),
     );

@@ -12,7 +12,6 @@ class CreateComplaintCubit extends Cubit<CreateComplaintState> {
   // قم بتحديث دالة createComplaint لتكون كالتالي:
 
   Future<void> createComplaint({
-    required BuildContext context,
     required String type,
     required String description,
     required int governmentId,
@@ -25,7 +24,6 @@ class CreateComplaintCubit extends Cubit<CreateComplaintState> {
     try {
       // هنا يتم استدعاء الـ Repository مع البيانات الجديدة
       final result = await complaintRepo.createComplaint(
-        context: context,
         type: type,
         description: description,
         governmentId: governmentId,

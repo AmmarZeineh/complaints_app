@@ -22,7 +22,7 @@ class ComplaintDetailsView extends StatelessWidget {
           child: Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
         title: Text(
-          " الشكاوي المقدمة ",
+          "تفاصيل الشكوى",
           style: AppTextStyles.w800_16.copyWith(color: Colors.white),
         ),
         centerTitle: true,

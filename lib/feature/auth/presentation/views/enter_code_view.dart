@@ -110,19 +110,22 @@ class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  tr('auth.Verify_code'),
+                  tr('كود التحقق'),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.w600_20,
                 ),
                 const SizedBox(height: 32),
-                VerificationCodeField(
-                  length: 6,
-                  onFilled: (value) {
-                    code = value;
-                  },
-                  size: const Size(30, 60),
-                  spaceBetween: 16,
-                  matchingPattern: RegExp(r'^\d+$'),
+                Directionality(
+                  textDirection: .rtl,
+                  child: VerificationCodeField(
+                    length: 6,
+                    onFilled: (value) {
+                      code = value;
+                    },
+                    size: const Size(30, 60),
+                    spaceBetween: 16,
+                    matchingPattern: RegExp(r'^\d+$'),
+                  ),
                 ),
                 const SizedBox(height: 32),
                 Padding(
@@ -138,10 +141,10 @@ class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
                           verificationCode: code!,
                         );
                       } else {
-                        showErrorMessage(tr('auth.Enter_valid_code'), context);
+                        showErrorMessage(tr('ادخل كود تأكيد صحيح'), context);
                       }
                     },
-                    title: 'auth.Verify'.tr(),
+                    title: 'تأكيد',
                   ),
                 ),
 
@@ -153,7 +156,7 @@ class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
                       );
                     },
                     child: Text(
-                      tr('auth.Resend_code'),
+                      tr('اعادة ارسال الكود'),
                       style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w600,
@@ -166,7 +169,7 @@ class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
                     child: Column(
                       children: [
                         Text(
-                          tr('auth.Resend_available_in'),
+                          tr('اعادة الارسال متاحة بعد'),
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 14,
@@ -184,7 +187,7 @@ class _EnterCodeVeiwBodyState extends State<EnterCodeVeiwBody> {
                         TextButton(
                           onPressed: null,
                           child: Text(
-                            tr('auth.Resend_code'),
+                            tr('اعد ارسال الكود'),
                             style: TextStyle(
                               color: Colors.grey[400],
                               fontWeight: FontWeight.w600,

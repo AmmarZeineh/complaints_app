@@ -10,7 +10,6 @@ class ComplaintsViewBody extends StatelessWidget {
 
   Future<void> _onRefresh(BuildContext context) async {
     context.read<GetComplaintsCubit>().getComplaints(
-      context: context,
       skip: 0,
       limit: 20,
     );

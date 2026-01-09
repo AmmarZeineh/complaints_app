@@ -9,16 +9,11 @@ class GetComplaintsCubit extends Cubit<GetComplaintsState> {
   GetComplaintsCubit(this.getComplaintsRepo) : super(GetComplaintsInitial());
   final GetComplaintsRepo getComplaintsRepo;
 
-  Future<void> getComplaints({
-    required int skip,
-    required int limit,
-    required BuildContext context,
-  }) async {
+  Future<void> getComplaints({required int skip, required int limit}) async {
     emit(GetComplaintsLoading());
     final result = await getComplaintsRepo.getComplaints(
       skip: skip,
       limit: limit,
-      context: context,
     );
     result.fold(
       (l) => emit(GetComplaintsError(l.message)),

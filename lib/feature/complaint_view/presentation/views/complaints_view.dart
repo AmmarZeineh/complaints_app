@@ -17,7 +17,6 @@ class ComplaintsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         automaticallyImplyLeading: false,
         title: Row(
           children: [
@@ -30,7 +29,6 @@ class ComplaintsView extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      // عرض النقطة الحمراء فقط عند وجود notifications غير مقروءة
                       if (state is FetchNotificationSuccess &&
                           state.hasUnreadNotifications)
                         Positioned(
@@ -78,7 +76,7 @@ class ComplaintsView extends StatelessWidget {
         child: BlocProvider(
           create: (context) =>
               GetComplaintsCubit(getIt.get<GetComplaintsRepo>())
-                ..getComplaints(skip: 0, limit: 10, context: context),
+                ..getComplaints(skip: 0, limit: 10),
           child: ComplaintsViewBody(),
         ),
       ),

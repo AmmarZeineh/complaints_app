@@ -21,7 +21,7 @@ class _CreateComplaintViewState extends State<CreateComplaintView> {
   @override
   void initState() {
     super.initState();
-    context.read<FetchNotificationCubit>().fetchNotifications(context: context);
+    context.read<FetchNotificationCubit>().fetchNotifications();
   }
 
   @override

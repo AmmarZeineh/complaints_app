@@ -35,9 +35,7 @@ class _NotificationViewState extends State<NotificationView> {
           create: (context) => MarkAsReadCubit(getIt.get<NotificationRepo>()),
           child: RefreshIndicator(
             onRefresh: () async {
-              await context.read<FetchNotificationCubit>().fetchNotifications(
-                context: context,
-              );
+              await context.read<FetchNotificationCubit>().fetchNotifications();
             },
             child: NotificationViewBody(),
           ),

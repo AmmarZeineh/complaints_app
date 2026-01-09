@@ -1,13 +1,14 @@
 import 'dart:developer';
 
+import 'package:complaints_app/core/helper_classes/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class Api {
   late final Dio _dio;
+  final TokenManager _tokenManager = TokenManager();
 
-  // Singleton pattern
   static final Api _instance = Api._internal();
   factory Api() => _instance;
 
@@ -17,7 +18,6 @@ class Api {
   }
 
   void _setupDio() {
-    // Base options
     _dio.options = BaseOptions(
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
@@ -28,7 +28,27 @@ class Api {
       },
     );
 
-    // Add interceptors for logging (optional)
+    // إضافة interceptor للـ token تلقائياً
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await _tokenManager.getAccessToken();
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          return handler.next(options);
+        },
+        onError: (error, handler) async {
+          // معالجة 401 (token expired)
+          if (error.response?.statusCode == 401) {
+            // هنا يمكنك إضافة منطق refresh token
+            await _handleTokenExpired();
+          }
+          return handler.next(error);
+        },
+      ),
+    );
+
     if (kDebugMode) {
       _dio.interceptors.add(
         LogInterceptor(
@@ -40,13 +60,18 @@ class Api {
     }
   }
 
+  Future<void> _handleTokenExpired() async {
+    // يمكنك إضافة منطق refresh token هنا
+    await _tokenManager.clearTokens();
+    // يمكنك إرسال event للتطبيق للانتقال لشاشة الـ login
+  }
+
   Future<dynamic> get({
     required String url,
-    String? token,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       Response response = await _dio.get(
         url,
@@ -63,11 +88,10 @@ class Api {
   Future<dynamic> post({
     required String url,
     dynamic body,
-    String? token,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       Response response = await _dio.post(
         url,
@@ -86,12 +110,10 @@ class Api {
   Future<dynamic> postFormData({
     required String url,
     required Map<String, dynamic> data,
-    String? token,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
       final options = _buildOptions(
-        token,
         additionalHeaders: {'Content-Type': 'multipart/form-data'},
       );
 
@@ -113,11 +135,10 @@ class Api {
   Future<dynamic> put({
     required String url,
     dynamic body,
-    String? token,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       Response response = await _dio.put(
         url,
@@ -135,11 +156,10 @@ class Api {
   Future<dynamic> patch({
     required String url,
     dynamic body,
-    String? token,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       Response response = await _dio.patch(
         url,
@@ -156,12 +176,11 @@ class Api {
 
   Future<dynamic> delete({
     required String url,
-    String? token,
     dynamic body,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       Response response = await _dio.delete(
         url,
@@ -180,11 +199,10 @@ class Api {
     required String url,
     required String filePath,
     required String fileKey,
-    String? token,
     Map<String, dynamic>? additionalData,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       FormData formData = FormData.fromMap({
         fileKey: await MultipartFile.fromFile(filePath),
@@ -206,11 +224,10 @@ class Api {
   Future<void> downloadFile({
     required String url,
     required String savePath,
-    String? token,
     ProgressCallback? onProgress,
   }) async {
     try {
-      final options = _buildOptions(token);
+      final options = _buildOptions();
 
       await _dio.download(
         url,
@@ -223,18 +240,11 @@ class Api {
     }
   }
 
-  Options _buildOptions(
-    String? token, {
-    Map<String, dynamic>? additionalHeaders,
-  }) {
+  Options _buildOptions({Map<String, dynamic>? additionalHeaders}) {
     Map<String, dynamic> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
 
     if (additionalHeaders != null) {
       headers.addAll(additionalHeaders);

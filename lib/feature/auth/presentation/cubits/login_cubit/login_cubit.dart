@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:complaints_app/feature/auth/domain/entities/user_entity.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +17,10 @@ class LoginCubit extends Cubit<LoginState> {
     required String fcmToken,
   }) async {
     emit(LoginLoading());
-    final result = await authRepo.login(context, email, password, fcmToken);
+    final result = await authRepo.login(email, password, fcmToken);
     result.fold(
       (l) => emit(LoginFailure(l.message)),
-      (r) => emit(LoginSuccess()),
+      (r) => emit(LoginSuccess(r)),
     );
   }
 }

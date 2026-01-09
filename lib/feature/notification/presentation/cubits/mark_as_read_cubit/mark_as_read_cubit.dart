@@ -9,13 +9,9 @@ class MarkAsReadCubit extends Cubit<MarkAsReadState> {
 
   final NotificationRepo _notificationRepo;
 
-  Future<void> markAsRead({
-    required BuildContext context,
-    required int notificationId,
-  }) async {
+  Future<void> markAsRead({required int notificationId}) async {
     emit(MarkAsReadLoading());
     var result = await _notificationRepo.markAsRead(
-      context: context,
       notificationId: notificationId,
     );
     result.fold(

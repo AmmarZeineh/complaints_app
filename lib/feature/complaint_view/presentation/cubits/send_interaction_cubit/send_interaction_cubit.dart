@@ -11,16 +11,13 @@ class SendInteractionCubit extends Cubit<SendInteractionState> {
   final GetComplaintsRepo getComplaintRepo;
 
   Future<void> sendInteraction({
-    required BuildContext context,
     required int id,
     required int reciverId,
     required List<XFile> images,
     required List<XFile> files,
   }) async {
-
     emit(SendInteractionLoading());
     final result = await getComplaintRepo.sendIneraction(
-      context: context,
       id: id,
       receiverId: reciverId,
       imageFiles: images,
@@ -30,6 +27,5 @@ class SendInteractionCubit extends Cubit<SendInteractionState> {
       (l) => emit(SendInteractionFailure(l.message)),
       (r) => emit(SendInteractionSuccess()),
     );
-    
   }
 }

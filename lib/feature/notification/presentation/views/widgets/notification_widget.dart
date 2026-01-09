@@ -41,13 +41,13 @@ class NotificationWidget extends StatelessWidget {
                     child: IconButton(
                       onPressed: () async {
                         await context.read<MarkAsReadCubit>().markAsRead(
-                          context: context,
                           notificationId: notification.id!,
                         );
                         // ignore: use_build_context_synchronously
-                        context.read<FetchNotificationCubit>()
-                        // ignore: use_build_context_synchronously
-                        .fetchNotifications(context: context);
+                        context
+                            .read<FetchNotificationCubit>()
+                            // ignore: use_build_context_synchronously
+                            .fetchNotifications();
                       },
                       icon: Icon(Icons.check, color: Colors.green),
                     ),

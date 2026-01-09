@@ -43,9 +43,6 @@ class _ComplaintDetailsViewBodyState extends State<ComplaintDetailsViewBody> {
   }
 
   IconData _getComplaintIcon(String type) {
-    if (type.contains("خدمة")) return Icons.miscellaneous_services;
-    if (type.contains("نظافة")) return Icons.cleaning_services;
-    if (type.contains("مشكلة")) return Icons.warning_amber;
     return Icons.report_problem;
   }
 
@@ -162,7 +159,7 @@ class _ComplaintDetailsViewBodyState extends State<ComplaintDetailsViewBody> {
                   showSuccessMessage('تم إرسال التفاعل بنجاح', context);
                 } else if (state is SendInteractionFailure) {
                   showErrorMessage(state.message, context);
-                 }
+                }
               },
               builder: (context, state) {
                 return CustomElevatedButton(
@@ -171,7 +168,6 @@ class _ComplaintDetailsViewBodyState extends State<ComplaintDetailsViewBody> {
                       : 'إضافة',
                   onPressed: () {
                     context.read<SendInteractionCubit>().sendInteraction(
-                      context: context,
                       id: widget.complaint.id,
                       reciverId: widget
                           .complaint

@@ -1,36 +1,32 @@
 import 'dart:developer';
 
 import 'package:complaints_app/constants.dart';
-import 'package:complaints_app/core/cubits/cubit/user_cubit.dart';
 import 'package:complaints_app/core/errors/failure.dart';
+import 'package:complaints_app/core/helper_classes/token_manager.dart';
 import 'package:complaints_app/core/services/api.dart';
 import 'package:complaints_app/feature/auth/data/models/user_model.dart';
 import 'package:complaints_app/feature/auth/domain/entities/user_entity.dart';
 import 'package:complaints_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final Api _api;
+  final TokenManager _tokenManager = TokenManager();
   AuthRepoImpl(this._api);
   @override
   Future<Either<Failure, UserEntity>> login(
-    BuildContext context,
     String email,
     String password,
     String fcmToken,
   ) async {
     try {
       var data = await _api.post(
-        token: null,
         url: '$baseUrl/auth/login',
         body: {'email': email, 'password': password, 'fcmToken': fcmToken},
       );
       log(fcmToken.toString());
       UserEntity userEntity = UserModel.fromJson(data).toEntity();
-      context.read<UserCubit>().setUser(userEntity);
-
+      await _tokenManager.saveTokens(accessToken: userEntity.accessToken);
       return Right(userEntity);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -67,7 +63,6 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       await _api.post(
-        token: null,
         url: '$baseUrl/email-verification/send-code',
         body: {'email': email},
       );
@@ -84,8 +79,6 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       await _api.post(
-        token: null,
-
         url: '$baseUrl/email-verification/verify-email',
         body: {'email': email, 'code': verificationCode},
       );

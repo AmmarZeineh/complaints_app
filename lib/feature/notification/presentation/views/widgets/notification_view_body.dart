@@ -4,8 +4,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationViewBody extends StatelessWidget {
+class NotificationViewBody extends StatefulWidget {
   const NotificationViewBody({super.key});
+
+  @override
+  State<NotificationViewBody> createState() => _NotificationViewBodyState();
+}
+
+class _NotificationViewBodyState extends State<NotificationViewBody> {
+  @override
+  void initState() {
+    context.read<FetchNotificationCubit>().fetchNotifications();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

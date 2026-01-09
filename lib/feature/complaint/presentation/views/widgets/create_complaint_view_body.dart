@@ -185,7 +185,6 @@ class _CreateComplaintViewBodyState extends State<CreateComplaintViewBody> {
                           await context
                               .read<CreateComplaintCubit>()
                               .createComplaint(
-                                context: context,
                                 type: type!,
                                 description: des!,
                                 governmentId: selectedGovernmentId!,
