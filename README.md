@@ -1,16 +1,35 @@
-# complaints_app
+# Government Complaints — Flutter Client
 
-A new Flutter project.
+The citizen-facing Flutter app for the [Government Complaints System](https://github.com/AmmarZeineh/complaints) API.
+This repository covers the **authentication flow**: sign up, email verification and log in.
+It is the base the complaint screens are built on.
 
-## Getting Started
+![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white)
+![BLoC](https://img.shields.io/badge/State-BLoC%2FCubit-blue)
 
-This project is a starting point for a Flutter application.
+## What's built
 
-A few resources to get you started if this is your first Flutter project:
+- Sign up and log in against the NestJS API
+- Email verification with a one-time code (`flutter_verification_code_field`)
+- Arabic and English with `easy_localization`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Architecture
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Feature-first Clean Architecture (`lib/core`, `lib/feature/auth` with data / domain / presentation),
+BLoC/Cubit state, `get_it` for dependency injection, Dio for networking and `dartz` `Either` for errors.
+
+## Tech stack
+
+Flutter · flutter_bloc · get_it · Dio · dartz · easy_localization · flutter_screenutil
+
+## Getting started
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Author
+
+**Ammar Zeineh**, Flutter Developer · [LinkedIn](https://linkedin.com/in/ammar-zeineh) · [GitHub](https://github.com/AmmarZeineh)
